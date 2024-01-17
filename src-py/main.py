@@ -30,7 +30,7 @@ def power_iteration(matrix, simulations=100):
     return np.dot(np.dot(matrix, rnd_vec), rnd_vec) / np.dot(rnd_vec, rnd_vec), rnd_vec
 
 # calculate all eigenvalues and eigenvectors
-def compute_eigen_values_vectors(matrix, simulations=100):
+def eigen_values_vectors(matrix, simulations=100):
     # Get the size of the matrix
     n = matrix.shape[0]
     # Initialize the eigenvectors and eigenvalues with zero
@@ -48,7 +48,7 @@ def compute_eigen_values_vectors(matrix, simulations=100):
 
 def SVD(matrix):
     # calculate eigen values and eigen vectors
-    eigen_values, eigen_vectors = compute_eigen_values_vectors(np.dot(matrix.T, matrix))
+    eigen_values, eigen_vectors = eigen_values_vectors(np.dot(matrix.T, matrix))
     # sort eigen values and eigen vectors
     # since we only need eigen_vectors for V_T we only sort them
     idx = eigen_values.argsort()[::-1]
@@ -64,11 +64,11 @@ def SVD(matrix):
     V = eigen_vectors
     return  V.T
 
-def recommend(liked_movie, VT):
+def recommend(user_liked_movies_index, VT):
     rec = []
     i = 0
     for column in zip(*VT): 
-        rec.append([i,np.dot(column,VT[liked_movie])])
+        rec.append([i,np.dot(column,VT[user_liked_movies_index])])
         i = i+1
     final_rec = [i[0] for i in sorted(rec, key=lambda x: x[1],reverse=True)]
     return final_rec
