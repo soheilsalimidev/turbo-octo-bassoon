@@ -80,7 +80,7 @@ fn main() {
         })
         .collect::<Vec<_>>();
     sorted_item.sort_by(|a, b| a.1.partial_cmp(&b.1).unwrap());
-    write_test_m(
+    write_file(
         sorted_item
             .into_iter()
             .map(|(i, _)| &movies[i])
@@ -89,7 +89,7 @@ fn main() {
     println!("result saved in output.csv")
 }
 
-fn write_test_m<T>(m: Vec<T>)
+fn write_file<T>(datra: Vec<T>)
 where
     T: serde::Serialize,
 {
@@ -101,7 +101,7 @@ where
             .open("./output.csv")
             .unwrap(),
     );
-    m.into_iter().for_each(|f| {
+    datra.into_iter().for_each(|f| {
         wtr.serialize(f).unwrap();
     });
 }
